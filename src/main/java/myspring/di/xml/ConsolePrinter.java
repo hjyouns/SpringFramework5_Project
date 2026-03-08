@@ -1,5 +1,8 @@
 package myspring.di.xml;
 
+import org.springframework.stereotype.Component;
+
+@Component("consolePrinter")
 public class ConsolePrinter implements Printer {
 	public ConsolePrinter() {
 		System.out.println(this.getClass().getName() + " 기본생성자 호출됨!");

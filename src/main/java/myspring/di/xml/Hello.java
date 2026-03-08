@@ -2,9 +2,23 @@ package myspring.di.xml;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
 public class Hello {
+	@Value("${myName}")
 	String name;
+	
+//	@Autowired
+//	@Qualifier("stringPrinter")
+	@Resource(name = "stringPrinter")
 	Printer printer;
+	
 	List<String> names;
 
 	public Hello() {
@@ -24,16 +38,6 @@ public class Hello {
 
 	public void setNames(List<String> list) {
 		this.names = list;
-	}
-
-	public void setName(String name) {
-		System.out.println("setName() 메서드 호출됨 " + name);
-		this.name = name;
-	}
-
-	public void setPrinter(Printer printer) {
-		System.out.println("setPrinter() 메서드 호출됨 " + printer.getClass().getName());
-		this.printer = printer;
 	}
 
 	public String sayHello() {
