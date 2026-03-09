@@ -1,7 +1,24 @@
 package mylab.spring.di.annot;
-@Repository // 데이터 접근 계층임을 명시 (컴포넌트 스캔 대상)
-public class UserRepository {
-    @Value("MySQL") // 속성에 직접 값을 주입
-    private String dbType;
-    // ... 기존 코드 (Getter/Setter/saveUser)
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service // [cite: 63, 65]
+public class UserService {
+    @Autowired // UserRepository 자동 주입 [cite: 56, 63]
+    private UserRepository userRepository;
+
+    @Autowired // SecurityService 자동 주입 [cite: 56, 63]
+    private SecurityService securityService;
+
+    public UserRepository getUserRepository() { return userRepository; }
+    public SecurityService getSecurityService() { return securityService; }
+
+    public boolean registerUser(String userId, String name, String password) {
+        // SecurityService로 인증 후 UserRepository에 저장 [cite: 57]
+        if (securityService.authenticate(userId, password)) {
+            return userRepository.saveUser(userId, name);
+        }
+        return false;
+    }
 }
